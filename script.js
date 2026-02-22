@@ -1,5 +1,3 @@
-// Minimal multi-gallery template (no tags, no search)
-
 const GALLERIES = [
   {
     id: "nature",
@@ -43,54 +41,119 @@ const $ = (sel, root = document) => root.querySelector(sel);
 
 $("#year").textContent = new Date().getFullYear();
 
-const tabs = $("#galleryTabs");
+// Optional: set artist name here
+$("#artistName").textContent = "ARTIST";
+
+// Page elements
 const titleEl = $("#pageTitle");
 const subtitleEl = $("#pageSubtitle");
 const textEl = $("#pageText");
 const imageRow = $("#imageRow");
 
-let activeId = GALLERIES[0]?.id ?? null;
+// Gallery nav buttons (beside title)
+const prevGalleryBtn = $("#prevGallery");
+const nextGalleryBtn = $("#nextGallery");
 
-function getActive() {
-  return GALLERIES.find(g => g.id === activeId) || GALLERIES[0];
+// Lightbox elements
+const lightbox = $("#lightbox");
+const lbBackdrop = $("#lightboxBackdrop");
+const lbClose = $("#lightboxClose");
+const lbImg = $("#lightboxImg");
+const prevImgBtn = $("#prevImg");
+const nextImgBtn = $("#nextImg");
+
+let activeGalleryIndex = 0;
+let activeImageIndex = 0;
+
+function activeGallery() {
+  return GALLERIES[activeGalleryIndex] || GALLERIES[0];
 }
 
-function buildTabs() {
-  tabs.innerHTML = "";
-  GALLERIES.forEach(g => {
-    const btn = document.createElement("button");
-    btn.className = "tab";
-    btn.type = "button";
-    btn.textContent = g.tabLabel;
-    btn.setAttribute("aria-selected", g.id === activeId ? "true" : "false");
-    btn.addEventListener("click", () => {
-      activeId = g.id;
-      render();
-    });
-    tabs.appendChild(btn);
-  });
-}
+function renderGallery() {
+  const g = activeGallery();
+  titleEl.textContent = g.title || "";
+  subtitleEl.textContent = g.subtitle || "";
+  textEl.textContent = g.text || "";
 
-function renderImages(images) {
   imageRow.innerHTML = "";
-  images.forEach(imgData => {
+  (g.images || []).forEach((imgData, idx) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "photoBtn";
+    btn.setAttribute("aria-label", `Open image ${idx + 1}`);
+
     const img = document.createElement("img");
     img.className = "photo";
     img.src = imgData.src;
     img.alt = imgData.alt || "";
     img.loading = "lazy";
-    imageRow.appendChild(img);
+
+    btn.appendChild(img);
+    btn.addEventListener("click", () => openLightbox(idx));
+    imageRow.appendChild(btn);
   });
 }
 
-function render() {
-  buildTabs();
-
-  const g = getActive();
-  titleEl.textContent = g.title || "";
-  subtitleEl.textContent = g.subtitle || "";
-  textEl.textContent = g.text || "";
-  renderImages(g.images || []);
+// Gallery switching
+function stepGallery(delta) {
+  const n = GALLERIES.length;
+  activeGalleryIndex = (activeGalleryIndex + delta + n) % n;
+  renderGallery();
 }
 
-render();
+prevGalleryBtn.addEventListener("click", () => stepGallery(-1));
+nextGalleryBtn.addEventListener("click", () => stepGallery(1));
+
+// Lightbox
+function openLightbox(index) {
+  activeImageIndex = index;
+  updateLightbox();
+
+  lightbox.classList.add("is-open");
+  lightbox.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  lightbox.classList.remove("is-open");
+  lightbox.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+function updateLightbox() {
+  const g = activeGallery();
+  const item = (g.images || [])[activeImageIndex];
+  if (!item) return;
+
+  lbImg.src = item.src;
+  lbImg.alt = item.alt || "";
+}
+
+function stepImage(delta) {
+  const g = activeGallery();
+  const n = (g.images || []).length;
+  if (!n) return;
+  activeImageIndex = (activeImageIndex + delta + n) % n;
+  updateLightbox();
+}
+
+lbClose.addEventListener("click", closeLightbox);
+lbBackdrop.addEventListener("click", closeLightbox);
+prevImgBtn.addEventListener("click", () => stepImage(-1));
+nextImgBtn.addEventListener("click", () => stepImage(1));
+
+document.addEventListener("keydown", (e) => {
+  const open = lightbox.getAttribute("aria-hidden") === "false";
+  if (open) {
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") stepImage(-1);
+    if (e.key === "ArrowRight") stepImage(1);
+  } else {
+    // Optional keyboard gallery nav even when lightbox isn't open
+    if (e.key === "ArrowLeft") stepGallery(-1);
+    if (e.key === "ArrowRight") stepGallery(1);
+  }
+});
+
+// Init
+renderGallery();

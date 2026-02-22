@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Theme Galleries</title>
-  <meta name="description" content="Minimal themed galleries." />
+  <title>Artist Galleries</title>
+  <meta name="description" content="Minimal gallery layout." />
   <link rel="stylesheet" href="./styles.css" />
+
+  <!-- Favicons -->
   <link rel="icon" href="./favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="./assets/favicons/favicon-32.png" sizes="32x32">
   <link rel="icon" type="image/png" href="./assets/favicons/favicon-16.png" sizes="16x16">
@@ -15,42 +17,49 @@
 </head>
 
 <body>
+  <!-- Top bar -->
   <header class="topbar">
     <div class="wrap topbar__inner">
-      <div class="brand">
-        <span class="brand__dot" aria-hidden="true"></span>
-        <span class="brand__name">Theme Galleries</span>
-      </div>
+      <!-- Fixed logo (always top-left) -->
+      <a class="logo" href="#" aria-label="Home">
+        <img src="./assets/logo-512.png" alt="Logo" />
+      </a>
 
-      <nav class="tabs" id="galleryTabs" aria-label="Galleries">
-        <!-- Filled by JS -->
-      </nav>
+      <!-- Center text -->
+      <div class="artist" id="artistName">ARTIST</div>
+
+      <!-- Right spacer to keep center aligned -->
+      <div class="topbar__spacer" aria-hidden="true"></div>
     </div>
   </header>
 
   <main class="wrap">
-    <!-- Big centered title bar -->
-    <section class="bar" aria-label="Title">
-      <div class="bar__inner">
-        <h1 id="pageTitle">TITLE</h1>
+    <!-- Title row with gallery nav arrows -->
+    <section class="titleRow" aria-label="Gallery title and navigation">
+      <button class="navArrow" id="prevGallery" type="button" aria-label="Previous gallery">‹</button>
+
+      <div class="bar">
+        <div class="bar__inner">
+          <h1 id="pageTitle">TITLE</h1>
+        </div>
       </div>
+
+      <button class="navArrow" id="nextGallery" type="button" aria-label="Next gallery">›</button>
     </section>
 
-    <!-- Minimal image row -->
+    <!-- 3 images row -->
     <section class="galleryRow" aria-label="Gallery images">
-      <div class="galleryRow__inner" id="imageRow">
-        <!-- Filled by JS -->
-      </div>
+      <div class="galleryRow__inner" id="imageRow"></div>
     </section>
 
-    <!-- Subtitle bar -->
-    <section class="bar" aria-label="Subtitle">
+    <!-- Subtitle -->
+    <section class="bar bar--sub" aria-label="Subtitle">
       <div class="bar__inner">
         <h2 id="pageSubtitle">SUBTITLE</h2>
       </div>
     </section>
 
-    <!-- Main text panel -->
+    <!-- Main text -->
     <section class="textPanel" aria-label="Description">
       <div class="textPanel__inner">
         <p id="pageText">MAIN TEXT</p>
@@ -59,8 +68,21 @@
   </main>
 
   <footer class="footer wrap">
-    <span class="muted">© <span id="year"></span> Theme Galleries</span>
+    <span class="muted">© <span id="year"></span> Artist</span>
   </footer>
+
+  <!-- Lightbox (blur background) -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox__backdrop" id="lightboxBackdrop"></div>
+
+    <div class="lightbox__panel" role="dialog" aria-modal="true" aria-label="Image preview">
+      <button class="lightbox__close" id="lightboxClose" aria-label="Close">✕</button>
+
+      <button class="lightbox__side lightbox__side--left" id="prevImg" aria-label="Previous image">‹</button>
+      <img id="lightboxImg" alt="" />
+      <button class="lightbox__side lightbox__side--right" id="nextImg" aria-label="Next image">›</button>
+    </div>
+  </div>
 
   <script src="./script.js"></script>
 </body>
