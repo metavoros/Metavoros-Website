@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>North & Pine — Design Studio</title>
+    <meta
+      name="description"
+      content="North & Pine is a design studio crafting brands, websites, and product experiences."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B2%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <!-- Top progress bar -->
+    <div class="progress" id="progress" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header class="header" id="top">
+      <div class="container header__inner">
+        <a class="brand" href="#top" aria-label="Go to top">
+          <span class="brand__mark">N&P</span>
+          <span class="brand__name">North & Pine</span>
+        </a>
+
+        <button class="iconbtn header__menu" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <nav class="nav" id="nav" aria-label="Primary">
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#process">Process</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#contact" class="btn btn--small">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Mobile drawer -->
+    <div class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer__backdrop" id="drawerBackdrop"></div>
+      <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
+        <div class="drawer__top">
+          <span class="drawer__title">Menu</span>
+          <button class="iconbtn" id="closeDrawer" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="drawer__links">
+          <a href="#services" class="drawer__link">Services</a>
+          <a href="#work" class="drawer__link">Work</a>
+          <a href="#process" class="drawer__link">Process</a>
+          <a href="#pricing" class="drawer__link">Pricing</a>
+          <a href="#contact" class="drawer__link drawer__cta">Contact</a>
+        </div>
+        <div class="drawer__footer">
+          <p class="muted">© <span id="year"></span> North & Pine</p>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <div class="container hero__grid">
+          <div class="hero__copy">
+            <div class="pill">
+              <span class="dot"></span> Available for new projects
+            </div>
+            <h1>
+              A design studio for brands that want to feel <span class="grad">unmistakable</span>.
+            </h1>
+            <p class="lead">
+              We craft visual identities, websites, and product experiences—built for clarity,
+              speed, and conversion.
+            </p>
+
+            <div class="hero__actions">
+              <a class="btn" href="#work">See our work</a>
+              <a class="btn btn--ghost" href="#contact">Get a quote</a>
+            </div>
+
+            <div class="hero__meta">
+              <div class="stat">
+                <div class="stat__num">10+</div>
+                <div class="stat__label">Years experience</div>
+              </div>
+              <div class="stat">
+                <div class="stat__num">120+</div>
+                <div class="stat__label">Launches shipped</div>
+              </div>
+              <div class="stat">
+                <div class="stat__num">4.9</div>
+                <div class="stat__label">Avg. client rating</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero__art" aria-hidden="true">
+            <div class="orb orb--a"></div>
+            <div class="orb orb--b"></div>
+            <div class="card3d">
+              <div class="card3d__top">
+                <span class="badge">Case Study</span>
+                <span class="chip">Web + Brand</span>
+              </div>
+              <div class="card3d__title">Juniper Coffee</div>
+              <p class="card3d__text">
+                A brand refresh and ecommerce site redesign that improved checkout completion by 18%.
+              </p>
+              <div class="card3d__bar">
+                <div class="bar"></div>
+              </div>
+              <div class="card3d__row">
+                <div class="mini">
+                  <div class="mini__k">Timeline</div>
+                  <div class="mini__v">3 weeks</div>
+                </div>
+                <div class="mini">
+                  <div class="mini__k">Deliverables</div>
+                  <div class="mini__v">UI kit, site</div>
+                </div>
+              </div>
+              <div class="card3d__cta">
+                <button class="btn btn--small btn--ghost" type="button" data-open-modal="modal" data-modal-title="Juniper Coffee" data-modal-desc="Brand refresh + ecommerce redesign. We streamlined navigation, rebuilt the product pages, and improved checkout clarity.">
+                  View details
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Logo strip -->
+      <section class="strip">
+        <div class="container strip__inner">
+          <p class="strip__label muted">Trusted by teams at</p>
+          <div class="strip__logos" aria-hidden="true">
+            <span class="logo">KIN</span>
+            <span class="logo">AURORA</span>
+            <span class="logo">FJORD</span>
+            <span class="logo">STUDIO 19</span>
+            <span class="logo">HARBOR</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services -->
+      <section class="section" id="services">
+        <div class="container">
+          <div class="section__head">
+            <h2>Services</h2>
+            <p class="muted">Pick a lane or mix and match—our process stays tight either way.</p>
+          </div>
+
+          <div class="grid3">
+            <article class="card">
+              <div class="card__icon">✦</div>
+              <h3>Brand Identity</h3>
+              <p>
+                Strategy, naming support, visual systems, and guidelines built to scale across channels.
+              </p>
+              <ul class="list">
+                <li>Logo + marks</li>
+                <li>Typography + color</li>
+                <li>Brand kit + templates</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <div class="card__icon">⌁</div>
+              <h3>Web Design</h3>
+              <p>
+                Marketing sites and landing pages designed for clarity, performance, and conversion.
+              </p>
+              <ul class="list">
+                <li>Information architecture</li>
+                <li>Responsive UI</li>
+                <li>Accessibility basics</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <div class="card__icon">⟡</div>
+              <h3>Product UI</h3>
+              <p>
+                UI kits, components, and flows that ship fast and keep teams aligned.
+              </p>
+              <ul class="list">
+                <li>Design systems</li>
+                <li>Prototyping</li>
+                <li>Handoff + specs</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Work -->
+      <section class="section section--alt" id="work">
+        <div class="container">
+          <div class="section__head">
+            <h2>Selected work</h2>
+            <p class="muted">A few recent launches. Click a card for details.</p>
+          </div>
+
+          <div class="work">
+            <button class="work__item" type="button"
+              data-open-modal="modal"
+              data-modal-title="Juniper Coffee"
+              data-modal-desc="Brand refresh + ecommerce redesign. Streamlined product discovery and reduced checkout friction.">
+              <div class="work__thumb">
+                <div class="thumb thumb--1"></div>
+              </div>
+              <div class="work__meta">
+                <span class="work__name">Juniper Coffee</span>
+                <span class="work__tag">Web • Brand</span>
+              </div>
+            </button>
+
+            <button class="work__item" type="button"
+              data-open-modal="modal"
+              data-modal-title="Harbor Analytics"
+              data-modal-desc="Marketing site redesign with clearer messaging, improved pricing page, and faster load times.">
+              <div class="work__thumb">
+                <div class="thumb thumb--2"></div>
+              </div>
+              <div class="work__meta">
+                <span class="work__name">Harbor Analytics</span>
+                <span class="work__tag">Web • Copy</span>
+              </div>
+            </button>
+
+            <button class="work__item" type="button"
+              data-open-modal="modal"
+              data-modal-title="Aurora Health"
+              data-modal-desc="Product UI kit and onboarding flow redesign for a mobile-first patient portal.">
+              <div class="work__thumb">
+                <div class="thumb thumb--3"></div>
+              </div>
+              <div class="work__meta">
+                <span class="work__name">Aurora Health</span>
+                <span class="work__tag">Product • UI Kit</span>
+              </div>
+            </button>
+
+            <button class="work__item" type="button"
+              data-open-modal="modal"
+              data-modal-title="Fjord Studio"
+              data-modal-desc="Brand identity system and portfolio site for a film studio—minimal, bold, and fast.">
+              <div class="work__thumb">
+                <div class="thumb thumb--4"></div>
+              </div>
+              <div class="work__meta">
+                <span class="work__name">Fjord Studio</span>
+                <span class="work__tag">Brand • Web</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Process -->
+      <section class="section" id="process">
+        <div class="container">
+          <div class="section__head">
+            <h2>How we work</h2>
+            <p class="muted">A small team with a simple, predictable process.</p>
+          </div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step__num">01</div>
+              <h3>Discover</h3>
+              <p>We align on goals, audience, constraints, and success metrics.</p>
+            </div>
+            <div class="step">
+              <div class="step__num">02</div>
+              <h3>Design</h3>
+              <p>We explore directions, converge quickly, and document decisions.</p>
+            </div>
+            <div class="step">
+              <div class="step__num">03</div>
+              <h3>Deliver</h3>
+              <p>We ship production-ready files, components, and a tidy handoff.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing -->
+      <section class="section section--alt" id="pricing">
+        <div class="container">
+          <div class="section__head">
+            <h2>Pricing</h2>
+            <p class="muted">Transparent packages. Custom quotes for larger scopes.</p>
+          </div>
+
+          <div class="pricing">
+            <article class="pricecard">
+              <h3>Starter</h3>
+              <p class="muted">For quick launches and landing pages.</p>
+              <div class="pricecard__price">$1,200</div>
+              <ul class="list">
+                <li>1-page site</li>
+                <li>Basic SEO setup</li>
+                <li>1 revision round</li>
+              </ul>
+              <a class="btn btn--ghost" href="#contact">Choose Starter</a>
+            </article>
+
+            <article class="pricecard pricecard--featured">
+              <div class="badge badge--solid">Most popular</div>
+              <h3>Studio</h3>
+              <p class="muted">Brand + site for growing businesses.</p>
+              <div class="pricecard__price">$3,500</div>
+              <ul class="list">
+                <li>Brand mini-kit</li>
+                <li>Up to 5 pages</li>
+                <li>2 revision rounds</li>
+              </ul>
+              <a class="btn" href="#contact">Choose Studio</a>
+            </article>
+
+            <article class="pricecard">
+              <h3>System</h3>
+              <p class="muted">For products needing reusable components.</p>
+              <div class="pricecard__price">$6,800</div>
+              <ul class="list">
+                <li>UI kit + components</li>
+                <li>Design tokens</li>
+                <li>Handoff support</li>
+              </ul>
+              <a class="btn btn--ghost" href="#contact">Choose System</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="section" id="contact">
+        <div class="container">
+          <div class="contact">
+            <div class="contact__copy">
+              <h2>Let’s build something clean and effective.</h2>
+              <p class="muted">
+                Fill the form and we’ll get back within 1–2 business days.
+                (This template includes a demo form—see notes below to make it send emails.)
+              </p>
+
+              <div class="contact__details">
+                <div class="contact__item">
+                  <div class="contact__k">Email</div>
+                  <div class="contact__v"><a href="mailto:hello@example.com">hello@example.com</a></div>
+                </div>
+                <div class="contact__item">
+                  <div class="contact__k">Location</div>
+                  <div class="contact__v">Remote • Worldwide</div>
+                </div>
+                <div class="contact__item">
+                  <div class="contact__k">Availability</div>
+                  <div class="contact__v">New projects monthly</div>
+                </div>
+              </div>
+            </div>
+
+            <form class="form" id="contactForm">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+              </div>
+
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required />
+              </div>
+
+              <div class="field">
+                <label for="budget">Budget</label>
+                <select id="budget" name="budget" required>
+                  <option value="" selected disabled>Select one</option>
+                  <option>$1k–$3k</option>
+                  <option>$3k–$7k</option>
+                  <option>$7k+</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="message">Project details</label>
+                <textarea id="message" name="message" rows="5" placeholder="What are we designing?" required></textarea>
+              </div>
+
+              <button class="btn" type="submit">Send message</button>
+              <p class="form__note muted" id="formNote" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer__inner">
+        <p class="muted">© <span id="year2"></span> North & Pine. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="#top">Back to top</a>
+          <a href="#work">Work</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal" aria-hidden="true">
+      <div class="modal__backdrop" data-close-modal></div>
+      <div class="modal__panel" role="dialog" aria-modal="true" aria-label="Project details">
+        <div class="modal__top">
+          <h3 id="modalTitle">Title</h3>
+          <button class="iconbtn" data-close-modal aria-label="Close dialog">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <p class="muted" id="modalDesc"></p>
+        <div class="modal__actions">
+          <a class="btn btn--ghost" href="#contact" data-close-modal>Start a similar project</a>
+          <button class="btn" type="button" data-close-modal>Done</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
