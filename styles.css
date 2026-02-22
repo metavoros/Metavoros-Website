@@ -1,5 +1,5 @@
 :root{
-  --bg:#0b0c10;
+  --bg:#c5bcab;
   --text:#eef0f6;
   --muted:#a8b0c2;
   --line:rgba(255,255,255,.14);
@@ -19,7 +19,7 @@ body{
 /* Top bar */
 .topbar{
   position:sticky; top:0; z-index:20;
-  background: rgba(11,12,16,.72);
+  background: #928c7f;
   border-bottom:1px solid var(--line);
   backdrop-filter: blur(10px);
 }
@@ -59,13 +59,13 @@ body{
 .navArrow{
   width:56px; height:56px;
   border:1px solid var(--line);
-  background: rgba(255,255,255,.03);
+  background: #767167;
   color:var(--text);
   cursor:pointer;
   font-size:2.2rem;
   line-height:1;
 }
-.navArrow:hover{background: rgba(255,255,255,.06)}
+.navArrow:hover{background: #e6dbc7}
 
 /* Bars */
 .bar{margin: 14px 0 14px}
