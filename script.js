@@ -5,9 +5,18 @@ const GALLERIES = [
     title: "Nature",
     description: "Landscapes, plants, and outdoor textures.",
     items: [
-      { src: "./assets/nature-1.jpg", title: "Mossy Path", tags: ["forest", "green"] },
-      { src: "./assets/nature-2.jpg", title: "Golden Dunes", tags: ["desert", "sunset"] },
-      { src: "./assets/nature-3.jpg", title: "Lake Morning", tags: ["water", "mist"] },
+      { src: "./assets/nature-1.jpg",
+        title: "Mossy Path", 
+        desc: "xxxxx",
+        tags: ["forest", "green"] },
+      { src: "./assets/nature-2.jpg", 
+        title: "Golden Dunes", 
+        desc: "xxxxx",
+        tags: ["desert", "sunset"] },
+      { src: "./assets/nature-3.jpg", 
+        title: "Lake Morning", 
+        desc: "xxxxx",
+        tags: ["water", "mist"] },
     ],
   },
   {
@@ -15,9 +24,18 @@ const GALLERIES = [
     title: "Architecture",
     description: "Shapes, structures, and city patterns.",
     items: [
-      { src: "./assets/architecture-1.jpg", title: "Glass Grid", tags: ["modern", "lines"] },
-      { src: "./assets/architecture-2.jpg", title: "Old Stone", tags: ["historic", "texture"] },
-      { src: "./assets/architecture-3.jpg", title: "Night Street", tags: ["city", "lights"] },
+      { src: "./assets/architecture-1.jpg", 
+        title: "Glass Grid", 
+        desc: "xxxxx",
+        tags: ["modern", "lines"] },
+      { src: "./assets/architecture-2.jpg", 
+        title: "Old Stone", 
+        desc: "xxxxx",
+        tags: ["historic", "texture"] },
+      { src: "./assets/architecture-3.jpg", 
+        title: "Night Street", 
+        desc: "xxxxx",
+        tags: ["city", "lights"] },
     ],
   },
   {
@@ -25,9 +43,18 @@ const GALLERIES = [
     title: "Portraits",
     description: "People, expressions, and studio scenes.",
     items: [
-      { src: "./assets/portraits-1.jpg", title: "Soft Light", tags: ["studio", "warm"] },
-      { src: "./assets/portraits-2.jpg", title: "Profile", tags: ["mono", "contrast"] },
-      { src: "./assets/portraits-3.jpg", title: "Smile", tags: ["candid", "bright"] },
+      { src: "./assets/portraits-1.jpg", 
+        title: "Soft Light", 
+        desc: "xxxxx",
+        tags: ["studio", "warm"] },
+      { src: "./assets/portraits-2.jpg", 
+        title: "Profile", 
+        desc: "xxxxx",
+        tags: ["mono", "contrast"] },
+      { src: "./assets/portraits-3.jpg", 
+        title: "Smile", 
+        desc: "xxxxx",
+        tags: ["candid", "bright"] },
     ],
   },
 ];
@@ -153,11 +180,16 @@ function renderGrid() {
     t.className = "card__title";
     t.textContent = item.title || "Untitled";
 
+    const d = document.createElement("div");
+    d.className = "card__desc";
+    d.textContent = item.desc || "";
+
     const tags = document.createElement("div");
     tags.className = "card__tags";
     tags.textContent = (item.tags || []).join(" · ");
 
     left.appendChild(t);
+    if (item.desc) left.appendChild(d);
     left.appendChild(tags);
 
     const badge = document.createElement("div");
