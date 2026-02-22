@@ -1,111 +1,58 @@
-// ------- Gallery Data (edit this) -------
+// Minimal multi-gallery template (no tags, no search)
+
 const GALLERIES = [
   {
     id: "nature",
-    title: "Nature",
-    description: "Landscapes, plants, and outdoor textures.",
-    items: [
-      { src: "./assets/nature-1.jpg",
-        title: "Mossy Path", 
-        desc: "xxxxx",
-        tags: ["forest", "green"] },
-      { src: "./assets/nature-2.jpg", 
-        title: "Golden Dunes", 
-        desc: "xxxxx",
-        tags: ["desert", "sunset"] },
-      { src: "./assets/nature-3.jpg", 
-        title: "Lake Morning", 
-        desc: "xxxxx",
-        tags: ["water", "mist"] },
+    tabLabel: "Nature",
+    title: "TITLE",
+    subtitle: "SUBTITLE",
+    text: "MAIN TEXT",
+    images: [
+      { src: "./assets/nature-1.jpg", alt: "Nature image 1" },
+      { src: "./assets/nature-2.jpg", alt: "Nature image 2" },
+      { src: "./assets/nature-3.jpg", alt: "Nature image 3" },
     ],
   },
   {
     id: "architecture",
-    title: "Architecture",
-    description: "Shapes, structures, and city patterns.",
-    items: [
-      { src: "./assets/architecture-1.jpg", 
-        title: "Glass Grid", 
-        desc: "xxxxx",
-        tags: ["modern", "lines"] },
-      { src: "./assets/architecture-2.jpg", 
-        title: "Old Stone", 
-        desc: "xxxxx",
-        tags: ["historic", "texture"] },
-      { src: "./assets/architecture-3.jpg", 
-        title: "Night Street", 
-        desc: "xxxxx",
-        tags: ["city", "lights"] },
+    tabLabel: "Architecture",
+    title: "TITLE",
+    subtitle: "SUBTITLE",
+    text: "MAIN TEXT",
+    images: [
+      { src: "./assets/architecture-1.jpg", alt: "Architecture image 1" },
+      { src: "./assets/architecture-2.jpg", alt: "Architecture image 2" },
+      { src: "./assets/architecture-3.jpg", alt: "Architecture image 3" },
     ],
   },
   {
     id: "portraits",
-    title: "Portraits",
-    description: "People, expressions, and studio scenes.",
-    items: [
-      { src: "./assets/portraits-1.jpg", 
-        title: "Soft Light", 
-        desc: "xxxxx",
-        tags: ["studio", "warm"] },
-      { src: "./assets/portraits-2.jpg", 
-        title: "Profile", 
-        desc: "xxxxx",
-        tags: ["mono", "contrast"] },
-      { src: "./assets/portraits-3.jpg", 
-        title: "Smile", 
-        desc: "xxxxx",
-        tags: ["candid", "bright"] },
+    tabLabel: "Portraits",
+    title: "TITLE",
+    subtitle: "SUBTITLE",
+    text: "MAIN TEXT",
+    images: [
+      { src: "./assets/portraits-1.jpg", alt: "Portrait image 1" },
+      { src: "./assets/portraits-2.jpg", alt: "Portrait image 2" },
+      { src: "./assets/portraits-3.jpg", alt: "Portrait image 3" },
     ],
   },
 ];
 
-// ------- Helpers -------
 const $ = (sel, root = document) => root.querySelector(sel);
-const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
 $("#year").textContent = new Date().getFullYear();
 
 const tabs = $("#galleryTabs");
-const grid = $("#grid");
-const titleEl = $("#galleryTitle");
-const descEl = $("#galleryDesc");
-const chipsEl = $("#tagChips");
-const searchInput = $("#searchInput");
-const emptyState = $("#emptyState");
+const titleEl = $("#pageTitle");
+const subtitleEl = $("#pageSubtitle");
+const textEl = $("#pageText");
+const imageRow = $("#imageRow");
 
-// State
-let activeGalleryId = GALLERIES[0]?.id ?? null;
-let activeTag = "All";
-let searchText = "";
+let activeId = GALLERIES[0]?.id ?? null;
 
-// Lightbox state
-let visibleItems = [];
-let lightboxIndex = 0;
-
-function getActiveGallery() {
-  return GALLERIES.find(g => g.id === activeGalleryId) || GALLERIES[0];
-}
-
-function uniqueTags(items) {
-  const set = new Set();
-  items.forEach(i => (i.tags || []).forEach(t => set.add(t)));
-  return Array.from(set).sort((a,b) => a.localeCompare(b));
-}
-
-function normalize(s) {
-  return (s || "").toString().trim().toLowerCase();
-}
-
-function matchesSearch(item) {
-  if (!searchText) return true;
-  const q = normalize(searchText);
-  const hay = normalize(item.title) + " " + normalize((item.tags || []).join(" "));
-  return hay.includes(q);
-}
-
-function matchesTag(item) {
-  if (activeTag === "All") return true;
-  return (item.tags || []).includes(activeTag);
+function getActive() {
+  return GALLERIES.find(g => g.id === activeId) || GALLERIES[0];
 }
 
 function buildTabs() {
@@ -114,167 +61,36 @@ function buildTabs() {
     const btn = document.createElement("button");
     btn.className = "tab";
     btn.type = "button";
-    btn.textContent = g.title;
-    btn.setAttribute("aria-selected", g.id === activeGalleryId ? "true" : "false");
+    btn.textContent = g.tabLabel;
+    btn.setAttribute("aria-selected", g.id === activeId ? "true" : "false");
     btn.addEventListener("click", () => {
-      activeGalleryId = g.id;
-      activeTag = "All";
-      searchText = "";
-      searchInput.value = "";
+      activeId = g.id;
       render();
     });
     tabs.appendChild(btn);
   });
 }
 
-function buildChips(items) {
-  const tags = ["All", ...uniqueTags(items)];
-  chipsEl.innerHTML = "";
-
-  tags.forEach(tag => {
-    const btn = document.createElement("button");
-    btn.className = "chip" + (tag === activeTag ? " is-active" : "");
-    btn.type = "button";
-    btn.textContent = tag;
-    btn.addEventListener("click", () => {
-      activeTag = tag;
-      renderGrid();
-      updateChipsActive();
-    });
-    chipsEl.appendChild(btn);
-  });
-}
-
-function updateChipsActive() {
-  $$(".chip", chipsEl).forEach((chip) => {
-    chip.classList.toggle("is-active", chip.textContent === activeTag);
-  });
-}
-
-function renderGrid() {
-  const g = getActiveGallery();
-  titleEl.textContent = g.title;
-  descEl.textContent = g.description;
-
-  visibleItems = (g.items || []).filter(it => matchesTag(it) && matchesSearch(it));
-
-  grid.innerHTML = "";
-  emptyState.hidden = visibleItems.length !== 0;
-
-  visibleItems.forEach((item, idx) => {
-    const card = document.createElement("article");
-    card.className = "card";
-    card.tabIndex = 0;
-
+function renderImages(images) {
+  imageRow.innerHTML = "";
+  images.forEach(imgData => {
     const img = document.createElement("img");
-    img.className = "thumb";
-    img.src = item.src;
-    img.alt = item.title || "Gallery image";
+    img.className = "photo";
+    img.src = imgData.src;
+    img.alt = imgData.alt || "";
     img.loading = "lazy";
-
-    const meta = document.createElement("div");
-    meta.className = "card__meta";
-
-    const left = document.createElement("div");
-    const t = document.createElement("div");
-    t.className = "card__title";
-    t.textContent = item.title || "Untitled";
-
-    const d = document.createElement("div");
-    d.className = "card__desc";
-    d.textContent = item.desc || "";
-
-    const tags = document.createElement("div");
-    tags.className = "card__tags";
-    tags.textContent = (item.tags || []).join(" · ");
-
-    left.appendChild(t);
-    if (item.desc) left.appendChild(d);
-    left.appendChild(tags);
-
-    const badge = document.createElement("div");
-    badge.className = "badge";
-    badge.textContent = g.title;
-
-    meta.appendChild(left);
-    meta.appendChild(badge);
-
-    card.appendChild(img);
-    card.appendChild(meta);
-
-    const open = () => openLightbox(idx);
-    card.addEventListener("click", open);
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") open();
-    });
-
-    grid.appendChild(card);
+    imageRow.appendChild(img);
   });
 }
 
 function render() {
   buildTabs();
-  const g = getActiveGallery();
-  buildChips(g.items || []);
-  renderGrid();
+
+  const g = getActive();
+  titleEl.textContent = g.title || "";
+  subtitleEl.textContent = g.subtitle || "";
+  textEl.textContent = g.text || "";
+  renderImages(g.images || []);
 }
 
-// Search
-searchInput.addEventListener("input", () => {
-  searchText = searchInput.value;
-  renderGrid();
-});
-
-// ------- Lightbox -------
-const lightbox = $("#lightbox");
-const lbImg = $("#lightboxImg");
-const lbTitle = $("#lightboxTitle");
-const lbTags = $("#lightboxTags");
-const lbClose = $("#lightboxClose");
-const lbBackdrop = $("#lightboxBackdrop");
-const prevBtn = $("#prevBtn");
-const nextBtn = $("#nextBtn");
-
-function openLightbox(index) {
-  lightboxIndex = index;
-  lightbox.classList.add("is-open");
-  lightbox.setAttribute("aria-hidden", "false");
-  updateLightbox();
-}
-
-function closeLightbox() {
-  lightbox.classList.remove("is-open");
-  lightbox.setAttribute("aria-hidden", "true");
-}
-
-function updateLightbox() {
-  const item = visibleItems[lightboxIndex];
-  if (!item) return;
-
-  lbImg.src = item.src;
-  lbImg.alt = item.title || "Gallery image";
-  lbTitle.textContent = item.title || "Untitled";
-  lbTags.textContent = (item.tags || []).join(" · ");
-}
-
-function step(delta) {
-  if (!visibleItems.length) return;
-  lightboxIndex = (lightboxIndex + delta + visibleItems.length) % visibleItems.length;
-  updateLightbox();
-}
-
-lbClose.addEventListener("click", closeLightbox);
-lbBackdrop.addEventListener("click", closeLightbox);
-prevBtn.addEventListener("click", () => step(-1));
-nextBtn.addEventListener("click", () => step(1));
-
-document.addEventListener("keydown", (e) => {
-  if (lightbox.getAttribute("aria-hidden") === "false") {
-    if (e.key === "Escape") closeLightbox();
-    if (e.key === "ArrowLeft") step(-1);
-    if (e.key === "ArrowRight") step(1);
-  }
-});
-
-// Init
 render();

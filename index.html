@@ -4,11 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Theme Galleries</title>
-  <meta name="description" content="A simple gallery site with themed collections." />
+  <meta name="description" content="Minimal themed galleries." />
   <link rel="stylesheet" href="./styles.css" />
-  <link rel="icon" href="./assets/favicons/favicon.ico" sizes="any">
+  <link rel="icon" href="./favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="./assets/favicons/favicon-32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="./assets/favicons/favicon-16.png" sizes="16x16">
+  <link rel="apple-touch-icon" href="./assets/favicons/apple-touch-icon.png" sizes="180x180">
   <link rel="manifest" href="./assets/favicons/site.webmanifest">
+  <meta name="theme-color" content="#0b0c10">
 </head>
+
 <body>
   <header class="topbar">
     <div class="wrap topbar__inner">
@@ -24,51 +29,34 @@
   </header>
 
   <main class="wrap">
-    <section class="controls" aria-label="Filters">
-      <div class="controls__left">
-        <h1 id="galleryTitle">Gallery</h1>
-        <p class="muted" id="galleryDesc">Select a theme to view images.</p>
-      </div>
-
-      <div class="controls__right">
-        <div class="chiprow" id="tagChips" aria-label="Tags">
-          <!-- Filled by JS -->
-        </div>
-
-        <label class="search" aria-label="Search by title or tag">
-          <span class="search__icon" aria-hidden="true">⌕</span>
-          <input id="searchInput" type="search" placeholder="Search (title or tag)..." />
-        </label>
+    <!-- Big centered title bar -->
+    <section class="bar" aria-label="Title">
+      <div class="bar__inner">
+        <h1 id="pageTitle">TITLE</h1>
       </div>
     </section>
 
-    <section class="grid" id="grid" aria-label="Images">
-      <!-- Filled by JS -->
+    <!-- Minimal image row -->
+    <section class="galleryRow" aria-label="Gallery images">
+      <div class="galleryRow__inner" id="imageRow">
+        <!-- Filled by JS -->
+      </div>
     </section>
 
-    <p class="empty" id="emptyState" hidden>No images match your filters.</p>
+    <!-- Subtitle bar -->
+    <section class="bar" aria-label="Subtitle">
+      <div class="bar__inner">
+        <h2 id="pageSubtitle">SUBTITLE</h2>
+      </div>
+    </section>
+
+    <!-- Main text panel -->
+    <section class="textPanel" aria-label="Description">
+      <div class="textPanel__inner">
+        <p id="pageText">MAIN TEXT</p>
+      </div>
+    </section>
   </main>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lightbox__backdrop" id="lightboxBackdrop"></div>
-    <div class="lightbox__panel" role="dialog" aria-modal="true" aria-label="Image preview">
-      <button class="iconbtn" id="lightboxClose" aria-label="Close">✕</button>
-
-      <img id="lightboxImg" alt="" />
-      <div class="lightbox__meta">
-        <div>
-          <div class="lightbox__title" id="lightboxTitle">Title</div>
-          <div class="muted" id="lightboxTags">tags</div>
-        </div>
-
-        <div class="lightbox__nav">
-          <button class="btn" id="prevBtn" type="button">Prev</button>
-          <button class="btn" id="nextBtn" type="button">Next</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <footer class="footer wrap">
     <span class="muted">© <span id="year"></span> Theme Galleries</span>
